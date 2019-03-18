@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  <title>Hello | Example Web App</title>
+{% endblock %}
+
+{% block content %}
+  <h2>Hello Page</h2>
+
+  <p>Message: {{ message }}</p>
+
+  <p>Instructions: append <code>?name=YOURNAME</code> to the URL Params to customize the message</p>
+{% endblock %}

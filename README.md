@@ -9,8 +9,8 @@ Clone or download from [GitHub source](https://github.com/prof-rossetti/web-app-
 Create and activate an Anaconda virtual environment:
 
 ```sh
-conda create -n my-web-env # first time only
-conda activate my-web-env
+conda create -n web-starter-env # first time only
+conda activate web-starter-env
 ```
 
 > NOTE: Subsequent commands assume you're running them from within the virtual environment, in the root directory of the repository.
