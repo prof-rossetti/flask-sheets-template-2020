@@ -1,5 +1,5 @@
 
-from flask import Blueprint, request, render_template, jsonify
+from flask import Blueprint, request, render_template, jsonify, flash, redirect #, url_for
 
 product_routes = Blueprint("product_routes", __name__)
 
@@ -18,4 +18,8 @@ def new():
 def create():
     print("CREATING A PRODUCT...")
     print("FORM DATA:", dict(request.form))
-    return jsonify(request.form)
+    #return jsonify(request.form)
+
+    product_name = request.form["product_name"]
+    flash(f"Product '{product_name}' created successfully!", "success") # use the "success" category to correspond with twitter bootstrap alert colors
+    return redirect("/products")
