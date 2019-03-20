@@ -34,19 +34,9 @@ def get_products():
     rows = sheet.get_all_records() #> <class 'list'>
     return sheet, rows
 
-if __name__ == "__main__":
-    sheet, rows = get_products()
-
-    for row in rows:
-        print(row) #> <class 'dict'>
-
-    #
-    # WRITE VALUES TO SHEET
-    #
-
-    next_id = len(rows) + 1 # number of records, plus one. TODO: max of current ids, plus one
-    next_row_number = len(rows) + 2 # number of records, plus a header row, plus one
-
+def create_product():
+    sheet, products = get_products()
+    next_id = len(products) + 1 # number of records, plus one. TODO: max of current ids, plus one
     product = {
         "id": next_id,
         "name": f"Product {next_id}",
@@ -54,10 +44,18 @@ if __name__ == "__main__":
         "price": 4.99,
         "availability_date": "2019-01-01"
     }
-
     next_row = list(product.values())
-
+    next_row_number = len(products) + 2 # number of records, plus a header row, plus one
     response = sheet.insert_row(next_row, next_row_number)
+    return response
+
+if __name__ == "__main__":
+    sheet, rows = get_products()
+
+    for row in rows:
+        print(row) #> <class 'dict'>
+
+    response = create_product()
 
     print("ADDING A RECORD...")
     # print(type(response)) #> dict
