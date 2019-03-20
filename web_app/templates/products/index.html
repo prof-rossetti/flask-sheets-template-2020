@@ -8,12 +8,14 @@
   <h2>Products Page</h2>
   <p>Listing all products...</p>
 
-  <ul>
-    <li>Product 1</li>
-    <li>Product 2</li>
-    <li>Product 3</li>
-    <li>Product 4</li>
-    <li>Product 5</li>
-    <li>etc...</li>
-  </ul>
+  {% if products %}
+    <ul>
+    {% for product in products %}
+      <li>{{ product["name"] }}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>OOPS, Please configure a Google Sheet Datastore! </p>
+  {% endif %}
+
 {% endblock %}
