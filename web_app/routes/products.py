@@ -1,4 +1,4 @@
-from web_app.spreadsheet_service import get_products
+from web_app.spreadsheet_service import get_products, create_product
 
 from flask import Blueprint, request, render_template, jsonify, flash, redirect #, url_for
 
@@ -20,6 +20,18 @@ def new():
 def create():
     print("CREATING A PRODUCT...")
     print("FORM DATA:", dict(request.form))
-    product_name = request.form["product_name"]
-    flash(f"Product '{product_name}' created successfully!", "success") # use the "success" category to correspond with twitter bootstrap alert colors
-    return redirect("/products")
+    try:
+        product_name = request.form["product_name"]
+        product_attributes = {
+            "name": product_name,
+            "department": request.form["department"],
+            "price": request.form["price"],
+            "availability_date": request.form["availability_date"]
+        }
+        response = create_product(product_attributes)
+        flash(f"Product '{product_name}' created successfully!", "success") # use the "success" category to correspond with twitter bootstrap alert colors
+        return redirect("/products")
+    except Exception as err:
+        print("ERROR:", type(err), err.name)
+        flash(f"ERROR: {err.name}. Please try again.", "danger") # use the "danger" category to correspond with twitter bootstrap alert colors
+        return redirect("/products")

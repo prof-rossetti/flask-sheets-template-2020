@@ -35,20 +35,25 @@ def get_products():
     rows = sheet.get_all_records() #> <class 'list'>
     return sheet, rows
 
-def create_product(sheet=None, products=None):
+# example product_attributes: {'name': 'Product CLI', 'department': 'snacks', 'price': 4.99, 'availability_date': '2019-01-01'}
+def create_product(product_attributes, sheet=None, products=None):
     if not (sheet and products):
         print("OH, PREFER TO PASS PREVIOUSLY-OBTAINED SHEET AND PRODUCTS, FOR FASTER PERFORMANCE!")
         sheet, products = get_products()
 
+    print(f"DETECTED {len(products)} EXISTING PRODUCTS")
+    print("NEW PRODUCT ATTRIBUTES:", product_attributes)
+
     next_id = len(products) + 1 # number of records, plus one. TODO: max of current ids, plus one
     product = {
         "id": next_id,
-        "name": f"Product {next_id}",
-        "department": "snacks",
-        "price": 4.99,
-        "availability_date": "2019-01-01"
+        "name": product_attributes["name"],
+        "department": product_attributes["department"],
+        "price": float(product_attributes["price"]),
+        "availability_date": product_attributes["availability_date"]
     }
-    next_row = list(product.values())
+
+    next_row = list(product.values()) #> [13, 'Product CLI', 'snacks', 4.99, '2019-01-01']
     next_row_number = len(products) + 2 # number of records, plus a header row, plus one
     response = sheet.insert_row(next_row, next_row_number)
     return response
@@ -59,7 +64,14 @@ if __name__ == "__main__":
     for row in rows:
         print(row) #> <class 'dict'>
 
-    response = create_product(sheet=sheet, products=rows)
+    product_attributes = {
+        "name": "Product CLI",
+        "department": "snacks",
+        "price": 4.99,
+        "availability_date": "2019-01-01"
+    }
+
+    response = create_product(product_attributes, sheet=sheet, products=rows)
 
     print("ADDING A RECORD...")
     # print(type(response)) #> dict
