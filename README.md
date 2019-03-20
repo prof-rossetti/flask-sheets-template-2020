@@ -42,14 +42,14 @@ pip install -r requirements.txt
 
 Visit the [Google Developer Console](https://console.developers.google.com/cloud-resource-manager). Create a new project, or select an existing one. Click on your project, then from the project page, search for the "Google Sheets API" and enable it. Also search for the "Google Drive API" and enable it.
 
-From either API page, or from the [API Credentials](https://console.developers.google.com/apis/credentials) page, follow a process to generate and download credentials to use the APIs. Fill in the form to find out what kind of credentials:
+From either API page, or from the [API Credentials](https://console.developers.google.com/apis/credentials) page, follow a process to create and download credentials to use the APIs. Fill in the form to find out what kind of credentials:
 
   + API: "Google Sheets API"
   + Calling From: "Web Server"
   + Accessing: "Application Data"
   + Using Engines: "No"
 
-The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Finally, download the resulting .json file and store it in this repo as "auth/spreadsheet_credentials.json".
+The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Finally, download the resulting .json file and store it in this repo as "auth/google_api_credentials.json".
 
 #### Configuring a Spreadsheet Datastore
 
@@ -105,5 +105,68 @@ After this configuration process is complete, you should be able to "deploy" the
 ```sh
 git push heroku master
 ```
+
+### Deploying the Spreadsheet Service
+
+Checkout the "sheets" branch and examine the code there.
+
+```sh
+git checkout sheets
+```
+
+Create another application server:
+
+```sh
+heroku apps:create web-app-starter-flask-sheets # or do this from the online console
+```
+
+Find the application's "heroku git url" from the application's settings tab in the heroku online dashboard, then associate this repository with that remote address:
+
+```sh
+git remote add heroku-sheets REMOTE_ADDRESS
+```
+
+Set the entire contents of the credentials.json file into an environment variable (approach allows service to function on Heroku server without uploading the .json file there):
+
+```sh
+export GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
+echo $GOOGLE_API_CREDENTIALS
+# ...
+heroku config:set GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)" -a web-app-starter-flask
+-sheets
+```
+
+Deploy the contents of the "sheets" branch to the "heroku-sheets" remote address:
+
+```sh
+git push heroku-sheets sheets:master
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## [Licence](/LICENSE.md)
