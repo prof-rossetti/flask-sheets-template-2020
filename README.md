@@ -17,6 +17,14 @@ Clone or download from [GitHub source](https://github.com/prof-rossetti/web-app-
 cd starter-web-app-flask
 ```
 
+Stay on the "master" branch for basic capabilities, or checkout the "sheets" branch for Google Sheets Datastore capabilities:
+
+```sh
+git checkout master
+# ... or ...
+git checkout sheets
+```
+
 Create and activate an Anaconda virtual environment:
 
 ```sh
@@ -34,11 +42,13 @@ pip install -r requirements.txt
 
 ## Setup
 
+The Google Sheets setup is only necessary for the Google Sheets Datastore version. If you're running the Basic version, feel free to skip this section.
+
 ### Google Sheets
 
-> SEE ALSO: this [excellent blog post](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html)
+> adapted from, see also: [this excellent blog post](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html)
 
-#### Downloading Credentials
+#### Downloading API Credentials
 
 Visit the [Google Developer Console](https://console.developers.google.com/cloud-resource-manager). Create a new project, or select an existing one. Click on your project, then from the project page, search for the "Google Sheets API" and enable it. Also search for the "Google Drive API" and enable it.
 
@@ -55,12 +65,12 @@ There is a way for us to configure the spreadsheet service to read the contents 
 
 ```sh
 export GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
-echo $GOOGLE_API_CREDENTIALS #> { "type": "service_account", "project_id": "starter-web-app-flask" ... }
+echo $GOOGLE_API_CREDENTIALS #> { "type": "service_account" ... }
 ```
 
 #### Configuring a Spreadsheet Datastore
 
-Use this [example Google Sheet datastore](https://docs.google.com/spreadsheets/d/1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE/edit#gid=0) (document id: `1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE`), or create your own Google Sheet.
+Create your own Google Sheet document, or use this  [example public](https://docs.google.com/spreadsheets/d/1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE/edit#gid=0) document.
 
 If you create your own, make sure it contains a sheet called "Products" with column headers `id`, `name`, `department`, `price`, and `availability_date`. And modify the document's sharing settings to grant "edit" privileges to the "client email" address located in the credentials file.
 
@@ -68,13 +78,14 @@ Note the document's unique identifier from its URL, and store the identifier in 
 
 ## Usage
 
-Send some test data to and from google sheets:
+If running the Google Sheets Datastore version, test your ability to read and write example data to and from your Google Sheets document:
 
 ```sh
+git checkout sheets # if not already on that branch
 python app/spreadsheet_service.py
 ```
 
-Run a local web server, then view your app in a browser at http://localhost:5000/:
+For either version, run a local web server, then view your app in a browser at http://localhost:5000/:
 
 ```sh
 FLASK_APP=web_app flask run
@@ -110,16 +121,11 @@ heroku git:remote -a web-app-starter-flask # necessary if you created the app fr
 After this configuration process is complete, you should be able to "deploy" the application's source code to the Heroku server:
 
 ```sh
+git checkout master # if not already on that branch
 git push heroku master
 ```
 
 ### Deploying the Spreadsheet Service
-
-Checkout the "sheets" branch and examine the code there.
-
-```sh
-git checkout sheets
-```
 
 Create another application server:
 
@@ -143,34 +149,8 @@ heroku config:set GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
 Deploy the contents of the "sheets" branch to the "heroku-sheets" remote address:
 
 ```sh
+git checkout sheets # if not already on that branch
 git push heroku-sheets sheets:master
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## [Licence](/LICENSE.md)
