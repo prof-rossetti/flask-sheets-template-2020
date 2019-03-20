@@ -1,35 +1,22 @@
 # Starter Web App (Flask w/ Google Sheets)
 
-An example web application, built in Python with the Flask package, with a Google Sheets datastore, for educational purposes.
+An example web application, built in Python with the Flask package and a Google Sheets datastore, for educational purposes.
 
-Deployment Environments:
-
-version | branch | production_url
---- | --- | ---
-Basic | master | https://web-app-starter-flask.herokuapp.com/
-Google Sheets Datastore | sheets | https://web-app-starter-flask-sheets.herokuapp.com/products
+View live in production at: https://web-app-starter-flask-sheets.herokuapp.com/products.
 
 ## Installation
 
-Clone or download from [GitHub source](https://github.com/prof-rossetti/web-app-starter-flask). And navigate there from the command-line:
+Clone or download from [GitHub source](https://github.com/prof-rossetti/web-app-starter-flask-sheets). And navigate there from the command-line:
 
 ```sh
-cd starter-web-app-flask
-```
-
-Stay on the "master" branch for basic capabilities, or checkout the "sheets" branch for Google Sheets Datastore capabilities:
-
-```sh
-git checkout master
-# ... or ...
-git checkout sheets
+cd starter-web-app-flask-sheets
 ```
 
 Create and activate an Anaconda virtual environment:
 
 ```sh
-conda create -n web-starter-env # first time only
-conda activate web-starter-env
+conda create -n web-starter-sheets-env # first time only
+conda activate web-starter-sheets-env
 ```
 
 > NOTE: Subsequent commands assume you're running them from within the virtual environment, in the root directory of the repository.
@@ -41,8 +28,6 @@ pip install -r requirements.txt
 ```
 
 ## Setup
-
-The Google Sheets setup is only necessary for the Google Sheets Datastore version. If you're running the Basic version, feel free to skip this section.
 
 ### Google Sheets
 
@@ -78,14 +63,13 @@ Note the document's unique identifier from its URL, and store the identifier in 
 
 ## Usage
 
-If running the Google Sheets Datastore version, test your ability to read and write example data to and from your Google Sheets document:
+Read and write example data to and from your Google Sheets document:
 
 ```sh
-git checkout sheets # if not already on that branch
 python app/spreadsheet_service.py
 ```
 
-For either version, run a local web server, then view your app in a browser at http://localhost:5000/:
+Run a local web server, then view your app in a browser at http://localhost:5000/:
 
 ```sh
 FLASK_APP=web_app flask run
@@ -104,30 +88,7 @@ heroku login
 heroku apps:list
 ```
 
-### Deploying the Basic App
-
-Create a new application server, optionally specifying a name (e.g. "web-app-starter-flask"):
-
-```sh
-heroku apps:create web-app-starter-flask # or do this from the online console
-```
-
-Then associate this repository with that application, as necessary:
-
-```sh
-heroku git:remote -a web-app-starter-flask # necessary if you created the app from the online console
-```
-
-After this configuration process is complete, you should be able to "deploy" the application's source code to the Heroku server:
-
-```sh
-git checkout master # if not already on that branch
-git push heroku master
-```
-
-### Deploying the Spreadsheet Service
-
-Create another application server:
+Create an application server (e.g. "web-app-starter-flask-sheets"):
 
 ```sh
 heroku apps:create web-app-starter-flask-sheets # or do this from the online console
@@ -136,7 +97,7 @@ heroku apps:create web-app-starter-flask-sheets # or do this from the online con
 Find the application's "heroku git url" from the application's settings tab in the heroku online dashboard, then associate this repository with that remote address:
 
 ```sh
-git remote add heroku-sheets REMOTE_ADDRESS
+git remote add heroku-sheets REMOTE_ADDRESS # like https://git.heroku.com/web-app-starter-flask-sheets.git
 ```
 
 Set the entire contents of the credentials.json file into an environment variable (approach allows service to function on Heroku server without uploading the .json file there):
@@ -146,10 +107,9 @@ heroku config:set GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
 -sheets
 ```
 
-Deploy the contents of the "sheets" branch to the "heroku-sheets" remote address:
+Deploy to the "heroku-sheets" remote address:
 
 ```sh
-git checkout sheets # if not already on that branch
 git push heroku-sheets sheets:master
 ```
 
