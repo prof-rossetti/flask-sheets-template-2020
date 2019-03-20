@@ -53,7 +53,9 @@ The suggested credentials will be for a service account. Follow the prompt to cr
 
 #### Configuring a Spreadsheet Datastore
 
-Create a new Google Sheets document, and inside it create a sheet called "Products" with column headers `id`, `name`, `department`, and `price`. Edit the sharing settings of this document to grant "edit" privileges to the "client email" address located in the credentials file.
+Use this [example Google Sheet datastore](https://docs.google.com/spreadsheets/d/1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE/edit#gid=0) (document id: `1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE`), or create your own Google Sheet.
+
+If you create your own, make sure it contains a sheet called "Products" with column headers `id`, `name`, `department`, `price`, and `availability_date`. And modify the document's sharing settings to grant "edit" privileges to the "client email" address located in the credentials file.
 
 Note the document's unique identifier from its URL, and store the identifier in an environment variable called `GOOGLE_SHEET_ID`.
 
