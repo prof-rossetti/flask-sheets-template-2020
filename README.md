@@ -32,7 +32,38 @@ Install package dependencies (first time only):
 pip install -r requirements.txt
 ```
 
+## Setup
+
+### Google Sheets
+
+> SEE ALSO: this [excellent blog post](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html)
+
+#### Downloading Credentials
+
+Visit the [Google Developer Console](https://console.developers.google.com/cloud-resource-manager). Create a new project, or select an existing one. Click on your project, then from the project page, search for the "Google Sheets API" and enable it. Also search for the "Google Drive API" and enable it.
+
+From either API page, or from the [API Credentials](https://console.developers.google.com/apis/credentials) page, follow a process to generate and download credentials to use the APIs. Fill in the form to find out what kind of credentials:
+
+  + API: "Google Sheets API"
+  + Calling From: "Web Server"
+  + Accessing: "Application Data"
+  + Using Engines: "No"
+
+The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Finally, download the resulting .json file and store it in this repo as "auth/spreadsheet_credentials.json".
+
+#### Configuring a Spreadsheet Datastore
+
+Create a new Google Sheets document, and inside it create a sheet called "Products" with column headers `id`, `name`, `department`, and `price`. Edit the sharing settings of this document to grant "edit" privileges to the "client email" address located in the credentials file.
+
+Note the document's unique identifier from its URL, and store the identifier in an environment variable called `GOOGLE_SHEET_ID`.
+
 ## Usage
+
+Send some test data to and from google sheets:
+
+```sh
+python app/spreadsheet_service.py
+```
 
 Run a local web server, then view your app in a browser at http://localhost:5000/:
 
