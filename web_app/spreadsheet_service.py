@@ -27,7 +27,6 @@ AUTH_SCOPE = [
 
 def get_products():
     #credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
-    #credentials = service_account.Credentials.from_service_account_info(json.loads(GOOGLE_API_CREDENTIALS))
     credentials = ServiceAccountCredentials._from_parsed_json_keyfile(json.loads(GOOGLE_API_CREDENTIALS), AUTH_SCOPE)
     client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
     print("GETTING PRODUCTS FROM THE SPREADSHEET...")
@@ -44,7 +43,6 @@ def create_product(product_attributes, sheet=None, products=None):
 
     print(f"DETECTED {len(products)} EXISTING PRODUCTS")
     print("NEW PRODUCT ATTRIBUTES:", product_attributes)
-
     next_id = len(products) + 1 # number of records, plus one. TODO: max of current ids, plus one
     product = {
         "id": next_id,
@@ -53,9 +51,9 @@ def create_product(product_attributes, sheet=None, products=None):
         "price": float(product_attributes["price"]),
         "availability_date": product_attributes["availability_date"]
     }
-
     next_row = list(product.values()) #> [13, 'Product CLI', 'snacks', 4.99, '2019-01-01']
     next_row_number = len(products) + 2 # number of records, plus a header row, plus one
+
     response = sheet.insert_row(next_row, next_row_number)
     return response
 
@@ -72,10 +70,7 @@ if __name__ == "__main__":
         "availability_date": "2019-01-01"
     }
 
-    response = create_product(product_attributes, sheet=sheet, products=rows)
-
     print("ADDING A RECORD...")
-    # print(type(response)) #> dict
+    response = create_product(product_attributes, sheet=sheet, products=rows)
     # print(response) #> {'spreadsheetId': 'abc123', 'updatedRange': 'Products!A5:C5', 'updatedRows': 1, 'updatedColumns': 3, 'updatedCells': 3}
-
     print(f"UPDATED RANGE: '{response['updatedRange']}' ({response['updatedCells']} CELLS)")
