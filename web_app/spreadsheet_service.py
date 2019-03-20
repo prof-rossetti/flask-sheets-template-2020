@@ -29,13 +29,17 @@ AUTH_SCOPE = [
 def get_products():
     credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
     client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+    print("GETTING PRODUCTS FROM THE SPREADSHEET...")
     doc = client.open_by_key(DOCUMENT_KEY) #> <class 'gspread.models.Spreadsheet'>
     sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
     rows = sheet.get_all_records() #> <class 'list'>
     return sheet, rows
 
-def create_product():
-    sheet, products = get_products()
+def create_product(sheet=None, products=None):
+    if not (sheet and products):
+        print("OH, PREFER TO PASS PREVIOUSLY-OBTAINED SHEET AND PRODUCTS, FOR FASTER PERFORMANCE!")
+        sheet, products = get_products()
+
     next_id = len(products) + 1 # number of records, plus one. TODO: max of current ids, plus one
     product = {
         "id": next_id,
@@ -55,7 +59,7 @@ if __name__ == "__main__":
     for row in rows:
         print(row) #> <class 'dict'>
 
-    response = create_product()
+    response = create_product(sheet=sheet, products=rows)
 
     print("ADDING A RECORD...")
     # print(type(response)) #> dict
