@@ -49,7 +49,14 @@ From either API page, or from the [API Credentials](https://console.developers.g
   + Accessing: "Application Data"
   + Using Engines: "No"
 
-The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Finally, download the resulting .json file and store it in this repo as "auth/google_api_credentials.json".
+The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Download the resulting .json file and store it in this repo as "auth/google_api_credentials.json".
+
+There is a way for us to configure the spreadsheet service to read the contents of that file, but to make the development environment compatible with the way the application needs to operate on the the Heroku server, we'll store the credentials information in an environment variable instead:
+
+```sh
+export GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
+echo $GOOGLE_API_CREDENTIALS #> { "type": "service_account", "project_id": "starter-web-app-flask" ... }
+```
 
 #### Configuring a Spreadsheet Datastore
 
@@ -129,9 +136,6 @@ git remote add heroku-sheets REMOTE_ADDRESS
 Set the entire contents of the credentials.json file into an environment variable (approach allows service to function on Heroku server without uploading the .json file there):
 
 ```sh
-export GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
-echo $GOOGLE_API_CREDENTIALS
-# ...
 heroku config:set GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)" -a web-app-starter-flask
 -sheets
 ```
