@@ -1,4 +1,4 @@
-# Starter Web App (Flask)
+# Starter Web App (Flask w/ Google Sheets)
 
 An example web application, built in Python with the Flask package, with a Google Sheets datastore, for educational purposes.
 
@@ -68,9 +68,9 @@ export GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)"
 echo $GOOGLE_API_CREDENTIALS #> { "type": "service_account" ... }
 ```
 
-#### Configuring a Spreadsheet Datastore
+#### Configuring a Google Sheet Datastore
 
-Create your own Google Sheet document, or use this  [example public](https://docs.google.com/spreadsheets/d/1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE/edit#gid=0) document.
+Create your own Google Sheet document, or use this [example public](https://docs.google.com/spreadsheets/d/1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE/edit#gid=0) document.
 
 If you create your own, make sure it contains a sheet called "Products" with column headers `id`, `name`, `department`, `price`, and `availability_date`. And modify the document's sharing settings to grant "edit" privileges to the "client email" address located in the credentials file.
 
