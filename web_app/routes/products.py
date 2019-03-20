@@ -7,7 +7,7 @@ product_routes = Blueprint("product_routes", __name__)
 @product_routes.route('/products')
 def index():
     print("VISITING THE PRODUCTS INDEX PAGE")
-    products = get_products()
+    sheet, products = get_products()
     return render_template("products/index.html", products=products)
 
 @product_routes.route('/products/new')
