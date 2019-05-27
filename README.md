@@ -4,7 +4,22 @@ An example web application, built in Python with the Flask package, for educatio
 
 ## Installation
 
-Clone or download from [GitHub source](https://github.com/prof-rossetti/web-app-starter-flask).
+
+Fork the repository from [GitHub source](https://github.com/prof-rossetti/web-app-starter-flask).
+
+Then use GitHub Desktop or the command-line to "clone" or download your fork onto your local computer:
+
+```sh
+git clone https://github.com/YOUR_USERNAME/web-app-starter-flask.git # this is the HTTP address, but you could alternatively use the SSH address
+```
+
+Navigate into your local repo from the command-line before running any of the other commands below:
+
+```sh
+cd web-app-starter-flask
+```
+
+## Setup
 
 Create and activate an Anaconda virtual environment:
 
