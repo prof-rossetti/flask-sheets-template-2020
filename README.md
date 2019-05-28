@@ -24,7 +24,7 @@ cd web-app-starter-flask
 Create and activate an Anaconda virtual environment:
 
 ```sh
-conda create -n web-starter-env # first time only
+conda create -n web-starter-env python=3.7 # first time only
 conda activate web-starter-env
 ```
 
