@@ -22,6 +22,7 @@ SHEET_NAME = "Products"
 GOOGLE_API_CREDENTIALS = os.environ.get("GOOGLE_API_CREDENTIALS")
 AUTH_SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
+    "https://www.googleapis.com/auth/drive",  #> auth/drive is needed as well.
     "https://www.googleapis.com/auth/drive.file" #> Per-file access to files created or opened by the app.
 ]
 
