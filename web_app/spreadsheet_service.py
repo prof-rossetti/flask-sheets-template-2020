@@ -26,6 +26,60 @@ AUTH_SCOPE = [
     "https://www.googleapis.com/auth/drive.file" #> Per-file access to files created or opened by the app.
 ]
 
+class SpreadsheetService():
+    def __init__(self):
+        print("INITIALIZING NEW SPREADSHEET SERVICE...")
+        #self.credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
+        self.credentials = ServiceAccountCredentials._from_parsed_json_keyfile(json.loads(GOOGLE_API_CREDENTIALS), AUTH_SCOPE)
+        self.client = gspread.authorize(self.credentials) #> <class 'gspread.client.Client'>
+        self.sheet = None
+        self.products = None
+
+
+    def get_products(self):
+        print("GETTING PRODUCTS FROM THE SPREADSHEET...")
+        doc = self.client.open_by_key(DOCUMENT_KEY) #> <class 'gspread.models.Spreadsheet'>
+        self.sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+        self.products = self.sheet.get_all_records() #> <class 'list'>
+
+    def create_product(self, product_attributes):
+        print("NEW PRODUCT ATTRIBUTES:", product_attributes)
+
+        if not (self.sheet and self.products): self.get_products()
+        #self.get_products()
+        print(f"DETECTED {len(self.products)} EXISTING PRODUCTS")
+        next_row_number = len(self.products) + 2 # number of records, plus a header row, plus one
+
+        if len(self.products) == 0:
+            next_id = 1
+        else:
+            next_id = max([int(p["id"]) for p in self.products]) + 1
+
+        product = {
+            "id": next_id,
+            "name": product_attributes["name"],
+            "department": product_attributes["department"],
+            "price": float(product_attributes["price"]),
+            "availability_date": product_attributes["availability_date"],
+            "img_url": product_attributes["img_url"]
+        }
+        next_row = list(product.values()) #> [13, 'Product CLI', 'snacks', 4.99, '2019-01-01']
+        response = self.sheet.insert_row(next_row, next_row_number)
+        return response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def get_products():
     #credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
     credentials = ServiceAccountCredentials._from_parsed_json_keyfile(json.loads(GOOGLE_API_CREDENTIALS), AUTH_SCOPE)
