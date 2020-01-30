@@ -9,8 +9,7 @@ products_api_routes = Blueprint("products_api_routes", __name__)
 @products_api_routes.route('/api/products')
 @products_api_routes.route('/api/products.json')
 def list_products():
-    #if "sheet_name" in request.args.keys():
-    #    print(request.args["sheet_name"] or 5)
+    print("LISTING PRODUCTS...")
     sheet, products = get_products()
     response = {
         "sheet_name": sheet.title,
@@ -18,19 +17,24 @@ def list_products():
     }
     return jsonify(response)
 
-#@products_api_routes.route('/api/products/<int:id>')
-#@products_api_routes.route('/api/products/<int:id>.json')
-#def show_product(id):
-#    current_app.logger.info(f"SHOWING PRODUCT {id}")
-#
-#    products = read_products_from_file(current_app.config["CSV_FILENAME"])
-#    product = find_product(id, products)
-#    if product == None:
-#        flash( f"OOPS. Couldn't find a product with an identifier of {id}. Please try again.", "error")
-#        return redirect(url_for('home_routes.index'))
-#
-#    return jsonify(product)
-#
+@products_api_routes.route('/api/products/<int:id>')
+@products_api_routes.route('/api/products/<int:id>.json')
+def show_product(id):
+    print(f"SHOWING PRODUCT {id}")
+    sheet, products = get_products()
+    try:
+        product = [p for p in products if str(p["id"]) == str(id)][0]
+        return jsonify(product)
+    except IndexError as err:
+        print("ERR", err)
+        message = f"OOPS. Couldn't find a product with an identifier of {id}. Please try again."
+        response = {"status": 404, "message": message}
+        return jsonify(response)
+
+
+
+
+
 #@products_api_routes.route('/api/products', methods=["POST"])
 #@products_api_routes.route('/api/products.json', methods=["POST"])
 #def create_product():
