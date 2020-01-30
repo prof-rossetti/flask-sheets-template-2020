@@ -68,6 +68,8 @@ if __name__ == "__main__":
 
     sheet, rows = get_products()
 
+    print(f"LISTING PRODUCTS FROM THE '{sheet.title}' SHEET")
+
     # LIST PRODUCTS
 
     for row in rows:

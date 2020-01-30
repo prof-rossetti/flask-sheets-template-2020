@@ -8,13 +8,15 @@ product_routes = Blueprint("product_routes", __name__)
 def index():
     print("VISITING THE PRODUCTS INDEX PAGE")
     sheet, products = get_products()
-    return render_template("products/index.html", products=products)
+    return render_template("products/index.html", products=products, sheet_name=sheet.title)
 
 @product_routes.route('/products/new')
 def new():
     print("VISITING THE NEW PRODUCT PAGE")
     print("REQUEST PARAMS:", dict(request.args))
     return render_template("products/form.html")
+
+# move to api:
 
 @product_routes.route('/products/create', methods=["POST"])
 def create():
