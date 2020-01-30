@@ -65,7 +65,7 @@ Note the document's unique identifier from its URL, and store the identifier in 
 Read and write example data to and from your Google Sheets document:
 
 ```sh
-python app/spreadsheet_service.py
+python web_app/spreadsheet_service.py
 ```
 
 Run a local web server, then view your app in a browser at http://localhost:5000/:

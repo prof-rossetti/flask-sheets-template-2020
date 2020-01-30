@@ -7,6 +7,7 @@
 
 import json
 import os
+import random
 
 from dotenv import load_dotenv
 import gspread
@@ -16,7 +17,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 load_dotenv()
 
 DOCUMENT_KEY = os.environ.get("GOOGLE_SHEET_ID", "OOPS Please get the spreadsheet identifier from its URL")
-SHEET_NAME = "Products"
+SHEET_NAME = os.getenv("GOOGLE_SHEET_NAME", default="Products-2020")
 
 #CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "spreadsheet_credentials.json")
 GOOGLE_API_CREDENTIALS = os.environ.get("GOOGLE_API_CREDENTIALS")
@@ -43,13 +44,19 @@ def create_product(product_attributes, sheet=None, products=None):
 
     print(f"DETECTED {len(products)} EXISTING PRODUCTS")
     print("NEW PRODUCT ATTRIBUTES:", product_attributes)
-    next_id = len(products) + 1 # number of records, plus one. TODO: max of current ids, plus one
+
+    if len(products) == 0:
+        next_id = 1
+    else:
+        next_id = max([int(p["id"]) for p in products]) + 1
+
     product = {
         "id": next_id,
         "name": product_attributes["name"],
         "department": product_attributes["department"],
         "price": float(product_attributes["price"]),
-        "availability_date": product_attributes["availability_date"]
+        "availability_date": product_attributes["availability_date"],
+        "img_url": product_attributes["img_url"]
     }
     next_row = list(product.values()) #> [13, 'Product CLI', 'snacks', 4.99, '2019-01-01']
     next_row_number = len(products) + 2 # number of records, plus a header row, plus one
@@ -58,16 +65,31 @@ def create_product(product_attributes, sheet=None, products=None):
     return response
 
 if __name__ == "__main__":
+
     sheet, rows = get_products()
+
+    # LIST PRODUCTS
 
     for row in rows:
         print(row) #> <class 'dict'>
+
+    # CREATE PRODUCT
+
+    IMG_URLS = [
+        "https://i.pinimg.com/originals/ea/56/e3/ea56e3ce387edc4fb87963b0c6d757a1.png",
+        "https://cdn1.iconfinder.com/data/icons/grocery-supermarket-line/64/grocery_supermarket_shopping_vegetable_food_-512.png",
+        "https://cdn1.iconfinder.com/data/icons/shopping-essentials/32/grocery-food-groceries-shop-shopping-milk-512.png",
+        "https://cdn2.iconfinder.com/data/icons/shop-until-you-drop/60/groceries-512.png",
+        "https://cdn.onlinewebfonts.com/svg/img_566093.png",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNiqJ8VByiXqMr_kd0C1fY0umMsdasvHAqm6dDWrbfql6pxsQHww&s"
+    ]
 
     product_attributes = {
         "name": "Product CLI",
         "department": "snacks",
         "price": 4.99,
-        "availability_date": "2019-01-01"
+        "availability_date": "2019-01-01",
+        "img_url": random.choice(IMG_URLS)
     }
 
     print("ADDING A RECORD...")
