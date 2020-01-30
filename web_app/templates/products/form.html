@@ -11,6 +11,7 @@
   <form action="/products/create" method="POST">
     <label>Name:</label>
     <input type="text" name="product_name" placeholder="Product XYZ" value="Product XYZ">
+    <br>
 
     <label>Department:</label>
     <select name="department">
@@ -19,9 +20,15 @@
       <option value="pantry">Pantry</option>
       <option value="frozen">Frozen</option>
     </select>
+    <br>
 
-    <label>Available:</label>
-    <input type="date" name="available_date" value="2019-01-01">
+    <label>Price:</label>
+    <input type="number" step="0.01" min="0" name="price" value="4.99" >
+    <br>
+
+    <label>Available as of:</label>
+    <input type="date" name="availability_date" value="2019-01-01">
+    <br>
 
     <button>Submit</button>
   </form>
