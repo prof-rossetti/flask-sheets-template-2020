@@ -9,7 +9,7 @@ ss = SpreadsheetService() # TODO: attach to Flask current_app during app constru
 def index():
     print("VISITING THE PRODUCTS INDEX PAGE")
     sheet, products = ss.get_products()
-    return render_template("products/index.html", products=products, sheet_name=sheet.title)
+    return render_template("products/index.html", products=products, sheet_name=sheet.title, sheet_id="1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE")
 
 @product_routes.route('/products/new')
 def new():

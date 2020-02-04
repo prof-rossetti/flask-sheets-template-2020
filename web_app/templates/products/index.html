@@ -6,7 +6,9 @@
 
 {% block content %}
   <h2>Products Page</h2>
-  <p>Listing all products from sheet: '{{ sheet_name }}'</p>
+  <p>Listing all products from the '{{ sheet_name }}' sheet in
+    <a href="https://docs.google.com/spreadsheets/d/{{ sheet_id }}">this document</a>.
+  </p>
 
   {% if products %}
 

@@ -34,11 +34,13 @@ class SpreadsheetService():
         self.client = gspread.authorize(self.credentials) #> <class 'gspread.client.Client'>
         self.sheet = None
         self.products = None
+        self.sheet_id = DOCUMENT_KEY
+        self.sheet_name = SHEET_NAME
 
     def get_products(self):
         print("GETTING PRODUCTS FROM THE SPREADSHEET...")
-        doc = self.client.open_by_key(DOCUMENT_KEY) #> <class 'gspread.models.Spreadsheet'>
-        self.sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+        doc = self.client.open_by_key(self.sheet_id) #> <class 'gspread.models.Spreadsheet'>
+        self.sheet = doc.worksheet(self.sheet_name) #> <class 'gspread.models.Worksheet'>
         self.products = self.sheet.get_all_records() #> <class 'list'>
         return self.sheet, self.products
 
