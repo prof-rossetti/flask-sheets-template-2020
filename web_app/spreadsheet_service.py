@@ -32,10 +32,10 @@ class SpreadsheetService():
         #self.credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
         self.credentials = ServiceAccountCredentials._from_parsed_json_keyfile(json.loads(GOOGLE_API_CREDENTIALS), AUTH_SCOPE)
         self.client = gspread.authorize(self.credentials) #> <class 'gspread.client.Client'>
-        self.sheet = None
-        self.products = None
         self.sheet_id = DOCUMENT_KEY
         self.sheet_name = SHEET_NAME
+        self.sheet = None
+        self.products = None
 
     def get_products(self):
         print("GETTING PRODUCTS FROM THE SPREADSHEET...")

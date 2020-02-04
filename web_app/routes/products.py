@@ -8,7 +8,7 @@ def index():
     print("VISITING THE PRODUCTS INDEX PAGE")
     ss = current_app.config['SPREADSHEET_SERVICE']
     sheet, products = ss.get_products()
-    return render_template("products/index.html", products=products, sheet_name=sheet.title, sheet_id="1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE")
+    return render_template("products/index.html", products=products, sheet_name=sheet.title, sheet_id= ss.sheet_id)
 
 @product_routes.route('/products/new')
 def new():
