@@ -1,9 +1,7 @@
 
 from flask import Blueprint, request, render_template, jsonify, flash, redirect, current_app #, url_for
-product_routes = Blueprint("product_routes", __name__)
 
-from web_app.spreadsheet_service import SpreadsheetService
-#ss = SpreadsheetService() # TODO: attach to Flask current_app during app construction in __init__.py
+product_routes = Blueprint("product_routes", __name__)
 
 @product_routes.route('/products')
 def index():

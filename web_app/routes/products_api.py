@@ -2,7 +2,6 @@
 from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
 
 #from web_app.routes.error_handlers import not_found, bad_request
-from web_app.spreadsheet_service import SpreadsheetService
 
 products_api_routes = Blueprint("products_api_routes", __name__)
 
