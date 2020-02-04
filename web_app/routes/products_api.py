@@ -9,6 +9,7 @@ products_api_routes = Blueprint("products_api_routes", __name__)
 @products_api_routes.route('/api/products.json', methods=["GET"])
 def list_products():
     print("LISTING PRODUCTS...")
+    ss = current_app.config['SPREADSHEET_SERVICE']
     sheet, products = ss.get_products()
     response = {"sheet_name": sheet.title, "products": products}
     return jsonify(response)
