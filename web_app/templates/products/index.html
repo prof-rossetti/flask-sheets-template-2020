@@ -12,26 +12,24 @@
 
     <div class="table-responsive">
       <table class="table">
-        <table class="table">
-          <thead>
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Department</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="row">{{ product["id"] }}</th>
+              <td><a href="/products/{{ product['id'] }}">{{ product["name"] }}</a></td>
+              <td>{{ product["department"] }}</td>
+              <td>${{ product["price"] }}</td>
             </tr>
-          </thead>
-          <tbody>
-            {% for product in products %}
-              <tr>
-                <th scope="row">{{ product["id"] }}</th>
-                <td><a href="/products/{{ product["id"] }}">{{ product["name"] }}</a></td>
-                <td><button>edit</button></td>
-                <td>delete</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+          {% endfor %}
+        </tbody>
       </table>
     </div>
 
