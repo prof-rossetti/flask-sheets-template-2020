@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  <title>Products | Example Web App</title>
+  <title>Products Page | </title>
 {% endblock %}
 
 {% block content %}
   <h2>Products Page</h2>
-  <p>Listing all products from the '{{ sheet_name }}' sheet...</p>
+  <p>Listing all products from sheet: '{{ sheet_name }}'</p>
 
   {% if products %}
 
@@ -16,8 +16,8 @@
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col">Department</th>
             <th scope="col">Price</th>
+            <th scope="col">Department</th>
           </tr>
         </thead>
         <tbody>
@@ -25,8 +25,8 @@
             <tr>
               <th scope="row">{{ product["id"] }}</th>
               <td><a href="/products/{{ product['id'] }}">{{ product["name"] }}</a></td>
-              <td>{{ product["department"] }}</td>
               <td>${{ product["price"] }}</td>
+              <td>{{ product["department"] }}</td>
             </tr>
           {% endfor %}
         </tbody>
