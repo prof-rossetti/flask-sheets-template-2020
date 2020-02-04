@@ -40,6 +40,7 @@ class SpreadsheetService():
         doc = self.client.open_by_key(DOCUMENT_KEY) #> <class 'gspread.models.Spreadsheet'>
         self.sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
         self.products = self.sheet.get_all_records() #> <class 'list'>
+        return self.sheet, self.products
 
     def create_product(self, product_attributes):
         print("NEW PRODUCT ATTRIBUTES:", product_attributes)
@@ -84,67 +85,16 @@ class SpreadsheetService():
         #breakpoint()
         return True
 
-
-
-
-
-
-
-
-
-
-# @deprecated
-def get_products():
-    #credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
-    credentials = ServiceAccountCredentials._from_parsed_json_keyfile(json.loads(GOOGLE_API_CREDENTIALS), AUTH_SCOPE)
-    client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
-    print("GETTING PRODUCTS FROM THE SPREADSHEET...")
-    doc = client.open_by_key(DOCUMENT_KEY) #> <class 'gspread.models.Spreadsheet'>
-    sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
-    rows = sheet.get_all_records() #> <class 'list'>
-    return sheet, rows
-
-# @deprecated
-# example product_attributes: {'name': 'Product CLI', 'department': 'snacks', 'price': 4.99, 'availability_date': '2019-01-01'}
-def create_product(product_attributes, sheet=None, products=None):
-    if not (sheet and products):
-        print("OH, PREFER TO PASS PREVIOUSLY-OBTAINED SHEET AND PRODUCTS, FOR FASTER PERFORMANCE!")
-        sheet, products = get_products()
-
-    print(f"DETECTED {len(products)} EXISTING PRODUCTS")
-    print("NEW PRODUCT ATTRIBUTES:", product_attributes)
-
-    if len(products) == 0:
-        next_id = 1
-    else:
-        next_id = max([int(p["id"]) for p in products]) + 1
-
-    product = {
-        "id": next_id,
-        "name": product_attributes["name"],
-        "department": product_attributes["department"],
-        "price": float(product_attributes["price"]),
-        "availability_date": product_attributes["availability_date"],
-        "img_url": product_attributes["img_url"]
-    }
-    next_row = list(product.values()) #> [13, 'Product CLI', 'snacks', 4.99, '2019-01-01']
-    next_row_number = len(products) + 2 # number of records, plus a header row, plus one
-
-    response = sheet.insert_row(next_row, next_row_number)
-    return response
-
 if __name__ == "__main__":
 
-    sheet, rows = ss.get_products()
-
+    sheet, products = ss.get_products()
+    print("----------------------")
     print(f"LISTING PRODUCTS FROM THE '{sheet.title}' SHEET")
+    for product in products:
+        print(product)
 
-    # LIST PRODUCTS
-
-    for row in rows:
-        print(row) #> <class 'dict'>
-
-    # CREATE PRODUCT
+    print("----------------------")
+    print("CREATING A PRODUCT...")
 
     IMG_URLS = [
         "https://i.pinimg.com/originals/ea/56/e3/ea56e3ce387edc4fb87963b0c6d757a1.png",
@@ -163,7 +113,15 @@ if __name__ == "__main__":
         "img_url": random.choice(IMG_URLS)
     }
 
-    print("ADDING A RECORD...")
     response = ss.create_product(product_attributes, sheet=sheet, products=rows)
     # print(response) #> {'spreadsheetId': 'abc123', 'updatedRange': 'Products!A5:C5', 'updatedRows': 1, 'updatedColumns': 3, 'updatedCells': 3}
-    print(f"UPDATED RANGE: '{response['updatedRange']}' ({response['updatedCells']} CELLS)")
+    print(f"... UPDATED RANGE: '{response['updatedRange']}' ({response['updatedCells']} CELLS)")
+
+    print("----------------------")
+    print("GETTING PRODUCT:", product_id)
+
+    print("----------------------")
+    print("EDITING PRODUCT:", product_id)
+
+    print("----------------------")
+    print("DELETING PRODUCT: product_id")

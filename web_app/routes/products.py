@@ -17,13 +17,13 @@ def new():
     print("REQUEST PARAMS:", dict(request.args))
     return render_template("products/form.html")
 
-@products_api_routes.route('/products/<int:id>')
+@product_routes.route('/products/<int:id>')
 def show(id):
     print("VISITING THE PRODUCT SHOW PAGE", id)
     product = ss.get_product(id)
-    return render_template("products/index.html", product=product)
+    return render_template("products/show.html", product=product)
 
-@products_api_routes.route('/products/<int:id>')
+@product_routes.route('/products/<int:id>')
 def edit(id):
     print("VISITING THE EDIT PRODUCT FORM", id)
     product = ss.get_product(id)

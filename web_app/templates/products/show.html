@@ -5,14 +5,17 @@
 {% endblock %}
 
 {% block content %}
-  <h2>Product: {{ product["name" }}</h2>
+  <h2>Product #{{ product["id"] }}</h2>
 
-  <p>Department: {{ product["department" }}</p>
+  <p>Name: {{ product["name"] }}</p>
 
-  <p>Price: {{ product["price" }}</p>
+  <p>Department: {{ product["department"] }}</p>
 
-  <p>Img: {{ product["img_url" }}</p>
+  <p>Price: {{ product["price"] }}</p>
 
-  <img src="{{ product['img_url'] }}" alt="">
+  {% if product["img_url"] %}
+    <p>Img:</p>
+    <img src="{{ product['img_url'] }}" alt="an image of the grocery item">
+  {% endif %}
 
 {% endblock %}

@@ -10,7 +10,6 @@
 
   {% if products %}
 
-
     <div class="table-responsive">
       <table class="table">
         <table class="table">
@@ -23,41 +22,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>First1</td>
-              <td>Last1</td>
-              <td>@handle1</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>First2</td>
-              <td>Last2</td>
-              <td>@handle2</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>First3</td>
-              <td>Last3</td>
-              <td>@handle3</td>
-            </tr>
+            {% for product in products %}
+              <tr>
+                <th scope="row">{{ product["id"] }}</th>
+                <td><a href="/products/{{ product["id"] }}">{{ product["name"] }}</a></td>
+                <td><button>edit</button></td>
+                <td>delete</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </table>
     </div>
-
-
-    <ul>
-    {% for product in products %}
-      <li>{{ product["name"] }} | edit | delete</li>
-    {% endfor %}
-    </ul>
-
-
-
-
-
-
 
   {% else %}
     <p>Products not found.</p>

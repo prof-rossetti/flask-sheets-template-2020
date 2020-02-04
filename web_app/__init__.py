@@ -20,6 +20,7 @@ def create_app():
     app.register_blueprint(home_routes)
     app.register_blueprint(product_routes)
     app.register_blueprint(products_api_routes)
+    # TODO app.ss = SpreadsheetService()
     return app
 
 if __name__ == "__main__":
