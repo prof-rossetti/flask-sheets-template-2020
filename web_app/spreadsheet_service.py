@@ -88,6 +88,8 @@ class SpreadsheetService():
 
 if __name__ == "__main__":
 
+    ss = SpreadsheetService()
+
     sheet, products = ss.get_products()
     print("----------------------")
     print(f"LISTING PRODUCTS FROM THE '{sheet.title}' SHEET")
@@ -114,10 +116,11 @@ if __name__ == "__main__":
         "img_url": random.choice(IMG_URLS)
     }
 
-    response = ss.create_product(product_attributes, sheet=sheet, products=rows)
+    response = ss.create_product(product_attributes)
     # print(response) #> {'spreadsheetId': 'abc123', 'updatedRange': 'Products!A5:C5', 'updatedRows': 1, 'updatedColumns': 3, 'updatedCells': 3}
     print(f"... UPDATED RANGE: '{response['updatedRange']}' ({response['updatedCells']} CELLS)")
 
+    product_id = products[-1]["id"]
     print("----------------------")
     print("GETTING PRODUCT:", product_id)
 
@@ -125,4 +128,4 @@ if __name__ == "__main__":
     print("EDITING PRODUCT:", product_id)
 
     print("----------------------")
-    print("DELETING PRODUCT: product_id")
+    print("DELETING PRODUCT:", product_id)
