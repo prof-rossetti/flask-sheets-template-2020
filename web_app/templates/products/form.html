@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  <title>New Product | Example Web App</title>
+  <title>New Product | My Starter Web App</title>
 {% endblock %}
 
 {% block content %}
   <h2>New Product Form</h2>
   <p>Please fill-in the form below...</p>
 
-  <form action="/products/create" method="POST">
+  <form action="/api/products" method="POST">
     <label>Name:</label>
-    <input type="text" name="product_name" placeholder="Product XYZ" value="Product XYZ">
+    <input type="text" name="name" placeholder="Product XYZ" value="Product XYZ">
     <br>
 
     <label>Department:</label>
@@ -28,6 +28,10 @@
 
     <label>Available as of:</label>
     <input type="date" name="availability_date" value="2019-01-01">
+    <br>
+
+    <label>Image URL:</label>
+    <input type="text" name="img_url" value="https://i.pinimg.com/originals/ea/56/e3/ea56e3ce387edc4fb87963b0c6d757a1.png">
     <br>
 
     <button>Submit</button>

@@ -1,19 +1,40 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  <title>Products | Example Web App</title>
+  <title>Products Page | My Starter Web App</title>
 {% endblock %}
 
 {% block content %}
   <h2>Products Page</h2>
-  <p>Listing all products...</p>
+  <p>Listing all products from the '{{ sheet_name }}' sheet in
+    <a href="https://docs.google.com/spreadsheets/d/{{ sheet_id }}">this document</a>.
+  </p>
 
   {% if products %}
-    <ul>
-    {% for product in products %}
-      <li>{{ product["name"] }}</li>
-    {% endfor %}
-    </ul>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+            <tr>
+              <th scope="row">{{ product["id"] }}</th>
+              <td><a href="/products/{{ product['id'] }}">{{ product["name"] }}</a></td>
+              <td>${{ product["price"] }}</td>
+              <td>{{ product["department"] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
   {% else %}
     <p>Products not found.</p>
   {% endif %}

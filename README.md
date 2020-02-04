@@ -2,8 +2,6 @@
 
 An example web application, built in Python with the Flask package and a Google Sheets datastore, for educational purposes.
 
-View live in production at: https://web-app-starter-flask-sheets.herokuapp.com/products.
-
 ## Installation
 
 Clone or download from [GitHub source](https://github.com/prof-rossetti/web-app-starter-flask-sheets). And navigate there from the command-line:
@@ -65,7 +63,7 @@ Note the document's unique identifier from its URL, and store the identifier in 
 Read and write example data to and from your Google Sheets document:
 
 ```sh
-python app/spreadsheet_service.py
+python web_app/spreadsheet_service.py
 ```
 
 Run a local web server, then view your app in a browser at http://localhost:5000/:
@@ -87,29 +85,35 @@ heroku login
 heroku apps:list
 ```
 
-Create an application server (e.g. "web-app-starter-flask-sheets"):
+Create an application server (e.g. "products-flask-app-2020"):
 
 ```sh
-heroku apps:create web-app-starter-flask-sheets # or do this from the online console
+heroku apps:create products-flask-app-2020
 ```
 
 Find the application's "heroku git url" from the application's settings tab in the heroku online dashboard, then associate this repository with that remote address:
 
 ```sh
-git remote add heroku-sheets REMOTE_ADDRESS # like https://git.heroku.com/web-app-starter-flask-sheets.git
+git remote add heroku-2020 REMOTE_ADDRESS # like https://git.heroku.com/products-flask-app-2020.git
+```
+
+Set environment variables on the server:
+
+```sh
+heroku config:set GOOGLE_SHEET_ID="1_hisQ9kNjmc-cafIasMue6IQG-ql_6TcqFGpVNOkUSE" -a products-flask-app-2020
+heroku config:set GOOGLE_SHEET_NAME="Products-2020" -a products-flask-app-2020
 ```
 
 Set the entire contents of the credentials.json file into an environment variable (approach allows service to function on Heroku server without uploading the .json file there):
 
 ```sh
-heroku config:set GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)" -a web-app-starter-flask
--sheets
+heroku config:set GOOGLE_API_CREDENTIALS="$(< auth/google_api_credentials.json)" -a products-flask-app-2020
 ```
 
-Deploy to the "heroku-sheets" remote address:
+Deploy to the "heroku-2020" remote address:
 
 ```sh
-git push heroku-sheets sheets:master
+git push heroku-2020 crud:master
 ```
 
 ## [Licence](/LICENSE.md)
