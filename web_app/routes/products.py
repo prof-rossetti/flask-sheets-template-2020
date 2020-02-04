@@ -23,7 +23,7 @@ def show(id):
     product = ss.get_product(id)
     return render_template("products/show.html", product=product)
 
-@product_routes.route('/products/<int:id>')
+@product_routes.route('/products/<int:id>/edit')
 def edit(id):
     print("VISITING THE EDIT PRODUCT FORM", id)
     ss = current_app.config['SPREADSHEET_SERVICE']

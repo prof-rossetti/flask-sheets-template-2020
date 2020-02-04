@@ -14,7 +14,6 @@ def list_products():
     return jsonify(response)
 
 @products_api_routes.route('/api/products', methods=["POST"])
-@products_api_routes.route('/api/products.json', methods=["POST"])
 def create_product():
     print("CREATING A PRODUCT...")
     product_attrs = dict(request.form)
@@ -42,8 +41,8 @@ def show_product(id):
     except IndexError as err:
         return jsonify({"message": f"OOPS. Couldn't find a product with an identifier of {id}. Please try again."}), 404
 
-@products_api_routes.route('/api/products/<int:id>', methods=["PUT", "POST"])
-@products_api_routes.route('/api/products/<int:id>.json', methods=["PUT", "POST"])
+#@products_api_routes.route('/api/products/<int:id>', methods=["PUT", "POST"])
+@products_api_routes.route('/api/products/<int:id>/update', methods=["POST"])
 def update_product(id):
     print(f"UPDATING PRODUCT {id}")
     product_attrs = request.get_json(force=True) # doesn't require request headers to specify content-type of json
@@ -60,8 +59,8 @@ def update_product(id):
         flash(f"Product '{product_attrs['name']}' updated successfully!", "success")
         return redirect(f"/products/{id}")
 
-@products_api_routes.route('/api/products/<int:id>', methods=["DELETE"])
-@products_api_routes.route('/api/products/<int:id>.json', methods=["DELETE"])
+#@products_api_routes.route('/api/products/<int:id>', methods=["DELETE"])
+@products_api_routes.route('/api/products/<int:id>/destroy', methods=["POST"])
 def destroy_product(id):
     print(f"DESTROYING PRODUCT {id}")
 
