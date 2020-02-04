@@ -35,7 +35,6 @@ class SpreadsheetService():
         self.sheet = None
         self.products = None
 
-
     def get_products(self):
         print("GETTING PRODUCTS FROM THE SPREADSHEET...")
         doc = self.client.open_by_key(DOCUMENT_KEY) #> <class 'gspread.models.Spreadsheet'>
@@ -67,6 +66,23 @@ class SpreadsheetService():
         response = self.sheet.insert_row(next_row, next_row_number)
         return response
 
+    def get_product(self, product_id):
+        """
+        Will raise IndexError if product identifier not found in the list
+        Otherwise will return the product as a dictionary
+        """
+        if not (self.sheet and self.products): self.get_products()
+        matching_products = [p for p in self.products if str(p["id"]) == str(product_id)]
+        return matching_products[0]
+
+    def update_product(self, product_attributes):
+        #product = self.get_product(product_attributes['id'])
+        #breakpoint()
+        return True
+
+    def destroy_product(self, product_id):
+        #breakpoint()
+        return True
 
 
 
@@ -77,9 +93,7 @@ class SpreadsheetService():
 
 
 
-
-
-
+# @deprecated
 def get_products():
     #credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
     credentials = ServiceAccountCredentials._from_parsed_json_keyfile(json.loads(GOOGLE_API_CREDENTIALS), AUTH_SCOPE)
@@ -90,6 +104,7 @@ def get_products():
     rows = sheet.get_all_records() #> <class 'list'>
     return sheet, rows
 
+# @deprecated
 # example product_attributes: {'name': 'Product CLI', 'department': 'snacks', 'price': 4.99, 'availability_date': '2019-01-01'}
 def create_product(product_attributes, sheet=None, products=None):
     if not (sheet and products):
@@ -120,7 +135,7 @@ def create_product(product_attributes, sheet=None, products=None):
 
 if __name__ == "__main__":
 
-    sheet, rows = get_products()
+    sheet, rows = ss.get_products()
 
     print(f"LISTING PRODUCTS FROM THE '{sheet.title}' SHEET")
 
@@ -149,6 +164,6 @@ if __name__ == "__main__":
     }
 
     print("ADDING A RECORD...")
-    response = create_product(product_attributes, sheet=sheet, products=rows)
+    response = ss.create_product(product_attributes, sheet=sheet, products=rows)
     # print(response) #> {'spreadsheetId': 'abc123', 'updatedRange': 'Products!A5:C5', 'updatedRows': 1, 'updatedColumns': 3, 'updatedCells': 3}
     print(f"UPDATED RANGE: '{response['updatedRange']}' ({response['updatedCells']} CELLS)")
