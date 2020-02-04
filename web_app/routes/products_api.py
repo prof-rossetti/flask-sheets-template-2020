@@ -15,6 +15,7 @@ def list_products():
     return jsonify(response)
 
 @products_api_routes.route('/api/products', methods=["POST"])
+@products_api_routes.route('/api/products.json', methods=["POST"])
 def create_product():
     print("CREATING A PRODUCT...")
     product_attrs = dict(request.form)
@@ -44,6 +45,7 @@ def show_product(id):
 
 #@products_api_routes.route('/api/products/<int:id>', methods=["PUT", "POST"])
 @products_api_routes.route('/api/products/<int:id>/update', methods=["POST"])
+@products_api_routes.route('/api/products/<int:id>/update.json', methods=["POST"])
 def update_product(id):
     print(f"UPDATING PRODUCT {id}")
     product_attrs = request.get_json(force=True) # doesn't require request headers to specify content-type of json
@@ -62,6 +64,7 @@ def update_product(id):
 
 #@products_api_routes.route('/api/products/<int:id>', methods=["DELETE"])
 @products_api_routes.route('/api/products/<int:id>/destroy', methods=["POST"])
+@products_api_routes.route('/api/products/<int:id>/destroy.json', methods=["POST"])
 def destroy_product(id):
     print(f"DESTROYING PRODUCT {id}")
 
