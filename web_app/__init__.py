@@ -7,6 +7,7 @@ from flask import Flask
 from web_app.routes.home import home_routes
 from web_app.routes.products import product_routes
 from web_app.routes.products_api import products_api_routes
+from web_app.spreadsheet_service import SpreadsheetService
 
 load_dotenv()
 
@@ -16,11 +17,10 @@ TESTING = False # True if app_env == "test" else False
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(ENV=FLASK_ENV, SECRET_KEY=SECRET_KEY, TESTING=TESTING)
+    app.config.from_mapping(ENV=FLASK_ENV, SECRET_KEY=SECRET_KEY, TESTING=TESTING, SPREADSHEET_SERVICE=SpreadsheetService())
     app.register_blueprint(home_routes)
     app.register_blueprint(product_routes)
     app.register_blueprint(products_api_routes)
-    # TODO app.ss = SpreadsheetService()
     return app
 
 if __name__ == "__main__":

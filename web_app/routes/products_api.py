@@ -4,8 +4,6 @@ from flask import Blueprint, current_app, flash, jsonify, redirect, request, url
 #from web_app.routes.error_handlers import not_found, bad_request
 from web_app.spreadsheet_service import SpreadsheetService
 
-ss = SpreadsheetService() # TODO: attach to Flask current_app during app construction in __init__.py
-
 products_api_routes = Blueprint("products_api_routes", __name__)
 
 @products_api_routes.route('/api/products', methods=["GET"])
@@ -23,6 +21,7 @@ def create_product():
     product_attrs = dict(request.form)
     print("FORM DATA:", product_attrs)
 
+    ss = current_app.config['SPREADSHEET_SERVICE']
     sheets_response = ss.create_product(product_attrs)
     print(sheets_response)
 
@@ -36,6 +35,7 @@ def create_product():
 @products_api_routes.route('/api/products/<int:id>.json', methods=["GET"])
 def show_product(id):
     print(f"SHOWING PRODUCT {id}")
+    ss = current_app.config['SPREADSHEET_SERVICE']
     try:
         product = ss.get_product(id)
         print(product)
@@ -51,6 +51,7 @@ def update_product(id):
     product_attrs["id"] = id # don't allow client to overwrite id :-)
     print(product_attrs)
 
+    ss = current_app.config['SPREADSHEET_SERVICE']
     sheets_response = ss.update_product(product_attrs)
     print(sheets_response)
 
@@ -65,6 +66,7 @@ def update_product(id):
 def destroy_product(id):
     print(f"DESTROYING PRODUCT {id}")
 
+    ss = current_app.config['SPREADSHEET_SERVICE']
     sheets_response = ss.destroy_product(id)
     print(sheets_response)
 
