@@ -47,8 +47,7 @@ class SpreadsheetService():
     def create_product(self, product_attributes):
         print("NEW PRODUCT ATTRIBUTES:", product_attributes)
 
-        if not (self.sheet and self.products): self.get_products()
-        #self.get_products()
+        self.get_products()
         print(f"DETECTED {len(self.products)} EXISTING PRODUCTS")
         next_row_number = len(self.products) + 2 # number of records, plus a header row, plus one
 
