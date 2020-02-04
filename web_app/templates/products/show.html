@@ -18,4 +18,14 @@
     <img src="{{ product['img_url'] }}" alt="an image of the grocery item">
   {% endif %}
 
+  <div class="row">
+    <a href="/products/{{ product['id'] }}/edit">
+      <button>Edit</button>
+    </a>
+
+    <form action="/api/products/{{ product['id'] }}/destroy" method="POST">
+      <button>Delete</button>
+    </form>
+  </div>
+
 {% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  <title>Edit Product | My Starter Web App</title>
+{% endblock %}
+
+{% block content %}
+  <h2>Edit Product #{{ product["id"] }}</h2>
+  <p>Please fill-in the form below...</p>
+
+  <form action="/api/products/{{ product['id'] }}/update" method="POST">
+
+    <label>Name:</label>
+    <input type="text" name="name" placeholder="Product XYZ" value="{{ product['name'] }}">
+    <br>
+
+    <label>Department:</label>
+    <select name="department">
+      <option value="snacks">Snacks</option>
+      <option value="beverages">Beverages</option>
+      <option value="pantry">Pantry</option>
+      <option value="frozen">Frozen</option>
+    </select>
+    <br>
+
+    <label>Price:</label>
+    <input type="number" step="0.01" min="0" name="price" value="{{ product['price'] }}" >
+    <br>
+
+    <label>Available as of:</label>
+    <input type="date" name="availability_date" value="{{ product['availability_date'] }}">
+    <br>
+
+    <label>Image URL:</label>
+    <input type="text" name="img_url" value="{{ product['img_url'] }}">
+    <br>
+
+    <button>Submit</button>
+  </form>
+{% endblock %}

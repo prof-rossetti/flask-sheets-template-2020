@@ -29,7 +29,7 @@ def create_product():
         return jsonify({"message": f"Product '{product_attrs['name']}' created successfully!"}), 200
     else:
         flash(f"Product '{product_attrs['name']}' created successfully!", "success")
-        return redirect(f"/products") # or maybe to: f"/products/{product_attrs['id']}"
+        return redirect("/products") # or maybe to: f"/products/{product_attrs['id']}"
 
 @products_api_routes.route('/api/products/<int:id>', methods=["GET"])
 @products_api_routes.route('/api/products/<int:id>.json', methods=["GET"])
@@ -48,18 +48,19 @@ def show_product(id):
 @products_api_routes.route('/api/products/<int:id>/update.json', methods=["POST"])
 def update_product(id):
     print(f"UPDATING PRODUCT {id}")
-    product_attrs = request.get_json(force=True) # doesn't require request headers to specify content-type of json
-    product_attrs["id"] = id # don't allow client to overwrite id :-)
-    print(product_attrs)
+    #product_attrs = request.get_json(force=True) # doesn't require request headers to specify content-type of json
+    #product_attrs["id"] = id # don't allow client to overwrite id :-)
+    #print(product_attrs)
+    product_attrs = {"name": "TODO"}
 
     ss = current_app.config['SPREADSHEET_SERVICE']
-    sheets_response = ss.update_product(product_attrs)
+    sheets_response = ss.update_product(id, product_attrs)
     print(sheets_response)
 
     if request.path.endswith(".json"):
         return jsonify({"message": f"Product '{product_attrs['name']}' updated successfully!"}), 200
     else:
-        flash(f"Product '{product_attrs['name']}' updated successfully!", "success")
+        flash(f"Product #{id} updated successfully!", "success")
         return redirect(f"/products/{id}")
 
 #@products_api_routes.route('/api/products/<int:id>', methods=["DELETE"])
