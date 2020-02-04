@@ -9,11 +9,56 @@
   <p>Listing all products from the '{{ sheet_name }}' sheet...</p>
 
   {% if products %}
+
+
+    <div class="table-responsive">
+      <table class="table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>First1</td>
+              <td>Last1</td>
+              <td>@handle1</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>First2</td>
+              <td>Last2</td>
+              <td>@handle2</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>First3</td>
+              <td>Last3</td>
+              <td>@handle3</td>
+            </tr>
+          </tbody>
+        </table>
+      </table>
+    </div>
+
+
     <ul>
     {% for product in products %}
-      <li>{{ product["name"] }}</li>
+      <li>{{ product["name"] }} | edit | delete</li>
     {% endfor %}
     </ul>
+
+
+
+
+
+
+
   {% else %}
     <p>Products not found.</p>
   {% endif %}

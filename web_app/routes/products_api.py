@@ -1,23 +1,23 @@
 
 from flask import Blueprint, current_app, flash, jsonify, redirect, request, url_for
 
-from web_app.routes.error_handlers import not_found, bad_request
+#from web_app.routes.error_handlers import not_found, bad_request
 from web_app.spreadsheet_service import SpreadsheetService
 
 ss = SpreadsheetService() # TODO: attach to Flask current_app during app construction in __init__.py
 
 products_api_routes = Blueprint("products_api_routes", __name__)
 
-@products_api_routes.route('/api/products')
-@products_api_routes.route('/api/products.json')
+@products_api_routes.route('/api/products', methods=["GET"])
+@products_api_routes.route('/api/products.json', methods=["GET"])
 def list_products():
     print("LISTING PRODUCTS...")
     sheet, products = ss.get_products()
     response = {"sheet_name": sheet.title, "products": products}
     return jsonify(response)
 
-@products_api_routes.route('/api/products/create', methods=["POST"])
-@products_api_routes.route('/api/products/create.json', methods=["POST"])
+@products_api_routes.route('/api/products', methods=["POST"])
+@products_api_routes.route('/api/products.json', methods=["POST"])
 def create_product():
     print("CREATING A PRODUCT...")
     product_attrs = dict(request.form)
@@ -32,8 +32,8 @@ def create_product():
         flash(f"Product '{product_attrs['name']}' created successfully!", "success")
         return redirect(f"/products") # or maybe to: f"/products/{product_attrs['id']}"
 
-@products_api_routes.route('/api/products/<int:id>')
-@products_api_routes.route('/api/products/<int:id>.json')
+@products_api_routes.route('/api/products/<int:id>', methods=["GET"])
+@products_api_routes.route('/api/products/<int:id>.json', methods=["GET"])
 def show_product(id):
     print(f"SHOWING PRODUCT {id}")
     try:

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  <title>Product Page | {{ product["name"] }} </title>
+{% endblock %}
+
+{% block content %}
+  <h2>Product: {{ product["name" }}</h2>
+
+  <p>Department: {{ product["department" }}</p>
+
+  <p>Price: {{ product["price" }}</p>
+
+  <p>Img: {{ product["img_url" }}</p>
+
+  <img src="{{ product['img_url'] }}" alt="">
+
+{% endblock %}
