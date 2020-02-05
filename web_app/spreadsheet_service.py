@@ -77,13 +77,15 @@ class SpreadsheetService():
         matching_products = [p for p in self.products if str(p["id"]) == str(product_id)]
         return matching_products[0]
 
-    def update_product(self, product_attributes):
+    def update_product(self, product_id, product_attributes):
         #product = self.get_product(product_attributes['id'])
         #breakpoint()
+        print("TODO UPDATE ROW")
         return True
 
     def destroy_product(self, product_id):
         #breakpoint()
+        print("TODO DELETE ROW")
         return True
 
 if __name__ == "__main__":
